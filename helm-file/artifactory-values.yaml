@@ -1,0 +1,48 @@
+databaseUpgradeReady: true
+unifiedUpgradeAllowed: true
+networkpolicy:
+  # Uncomment to allow only artifactory pods to communicate with postgresql (if postgresql.enabled is true)
+  - name: postgresql
+    podSelector:
+      matchLabels:
+        app: postgresql
+    ingress:
+      - from:
+          - podSelector:
+              matchLabels:
+                app: artifactory
+ingress:
+  className: nginx
+  enabled: true
+  defaultBackend:
+    enabled: true
+nginx:
+  enabled: true
+  hosts:
+    - tooling-artifactory.citatech.dns-dynamic.net
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # To output the default helm chat configuration run
+# helm show values jfrog/artifactory > artifactory-default.yaml
+
+
+# # Run this command to upgrade the helm release
+# helm upgrade --install artifactory jfrog/artifactory --version 107.90.10 -n tools -f values.yaml

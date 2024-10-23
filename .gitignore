@@ -1,0 +1,8 @@
+/artifactory/
+/.terraform/
+.terraform.lock.hcl
+variables.tfvars
+variables.tf
+errored.tfstate
+default-values.yaml
+kubeconfig

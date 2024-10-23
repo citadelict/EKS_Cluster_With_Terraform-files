@@ -1,0 +1,4 @@
+export KUBECONFIG=~/Public/EKS_Cluster_With_Terraform/kubeconfig
+echo $KUBECONFIG
+
+helm uninstall artifactory -n tools
