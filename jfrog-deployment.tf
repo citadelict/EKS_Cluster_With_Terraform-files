@@ -49,7 +49,7 @@ resource "aws_security_group_rule" "allow_all_outbound" {
   description       = "Allow all outbound traffic from EKS worker nodes"
 }
 
-# Helm release for Artifactory
+# Helm Release for Artifactory
 resource "helm_release" "artifactory" {
   name       = "artifactory"
   repository = "https://charts.jfrog.io"
@@ -61,8 +61,11 @@ resource "helm_release" "artifactory" {
     file("${path.module}/values.yaml")
   ]
 
+  timeout = 600 # Timeout in seconds (10 minutes)
+
   depends_on = [
-    kubernetes_namespace.tools
+    kubernetes_namespace.tools,
+    null_resource.update_kubeconfig  # Ensure kubeconfig is updated first
   ]
 }
 

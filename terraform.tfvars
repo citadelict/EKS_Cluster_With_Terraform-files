@@ -1,4 +1,6 @@
 cluster_name            = "tooling-app-eks"
+aws_region              = "us-west-1"
+
 iac_environment_tag     = "development"
 name_prefix             = "citatech-io-eks"
 main_network_block      = "10.0.0.0/16"

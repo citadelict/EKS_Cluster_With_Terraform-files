@@ -25,3 +25,5 @@ postgresql:
   persistence:
     enabled: true
     size: 200Gi
+
+storageClassName: gp2-encrypted

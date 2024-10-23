@@ -9,9 +9,6 @@ module "eks_cluster" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
   cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
     kube-proxy = {
       most_recent = true
     }
@@ -144,22 +141,16 @@ resource "kubernetes_storage_class_v1" "storageclass_gp2" {
     encrypted = "true"
   }
 }
-
-resource "null_resource" "set_kubeconfig_env" {
+# Update Kubeconfig After Cluster Creation
+resource "null_resource" "update_kubeconfig" {
   depends_on = [module.eks_cluster]
 
   provisioner "local-exec" {
-    command = <<EOT
-      if ! grep -Fxq "export KUBECONFIG=${path.module}/kubeconfig" ~/.bashrc; then
-        echo "export KUBECONFIG=${path.module}/kubeconfig" >> ~/.bashrc
-      fi
-    EOT
-    interpreter = ["bash", "-c"]
+    command = "aws eks update-kubeconfig --name ${module.eks_cluster.cluster_name} --region ${var.aws_region} --kubeconfig ${path.module}/kubeconfig"
   }
 
-  # Triggers to ensure this runs whenever the kubeconfig path or cluster name changes
   triggers = {
-    kubeconfig_path = "${path.module}/kubeconfig"
-    cluster_name    = module.eks_cluster.cluster_name
+    cluster_endpoint = module.eks_cluster.cluster_endpoint
+    cluster_name     = module.eks_cluster.cluster_name
   }
 }

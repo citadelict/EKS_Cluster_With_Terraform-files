@@ -21,30 +21,3 @@ data "aws_eks_cluster" "cluster_testing" {
   depends_on = [module.eks_cluster]
 }
 
-# Get the ELB hosted zone ID
-data "aws_elb_hosted_zone_id" "main" {}
-
-
-
-# Data source to get the Nginx Ingress Controller's LoadBalancer hostname
-data "kubernetes_service" "ingress_nginx" {
-  depends_on = [helm_release.ingress_nginx_webhook]
-
-  metadata {
-    name      = "ingress-nginx-controller"
-    namespace = "ingress-nginx"
-  }
-}
-
-data "kubernetes_service" "nginx_ingress_loadbalancer" {
-  metadata {
-    name      = "ingress-nginx-controller" # Ensure this matches the actual name of your Nginx service
-    namespace = "ingress-nginx"
-  }
-}
-
-
-data "aws_route53_zone" "citatech_online" {
-  name         = "citatech.online" # Replace with your actual domain name
-  private_zone = false             # Set to true if it's a private hosted zone
-}
