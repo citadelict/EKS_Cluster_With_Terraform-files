@@ -17,7 +17,7 @@ postgresql:
     repository: bitnami/postgresql
     tag: 15.6.0-debian-11-r16
   postgresqlUsername: artifactory
-  postgresqlPassword: "MTJB4d2pvd"
+  postgresqlPassword: ""
   postgresqlDatabase: artifactory
   postgresqlExtendedConf:
     listenAddresses: "*"
@@ -26,4 +26,3 @@ postgresql:
     enabled: true
     size: 200Gi
 
-storageClassName: gp2-encrypted

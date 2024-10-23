@@ -20,4 +20,3 @@ data "aws_eks_cluster" "cluster_testing" {
   name = module.eks_cluster.cluster_name
   depends_on = [module.eks_cluster]
 }
-
