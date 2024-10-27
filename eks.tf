@@ -104,27 +104,6 @@ resource "aws_eks_addon" "ebs_csi_driver" {
   ]
 }
 
-# Optional: Storage Class Configuration (uncomment if needed)
-# resource "kubernetes_storage_class_v1" "gp2_encrypted" {
-#   depends_on = [aws_eks_addon.ebs_csi_driver]
-#
-#   metadata {
-#     name = "gp2-encrypted"
-#     annotations = {
-#       "storageclass.kubernetes.io/is-default-class" = "true"
-#     }
-#   }
-#
-#   storage_provisioner    = "ebs.csi.aws.com"
-#   reclaim_policy        = "Delete"
-#   allow_volume_expansion = true
-#   volume_binding_mode    = "WaitForFirstConsumer"
-#
-#   parameters = {
-#     type      = "gp2"
-#     encrypted = "true"
-#   }
-# }
 
 # Update Kubeconfig
 resource "null_resource" "update_kubeconfig" {

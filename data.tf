@@ -31,3 +31,28 @@ data "aws_eks_addon_version" "this" {
   kubernetes_version = module.eks_cluster.cluster_version
   most_recent        = true
 }
+
+# Get DNS name of the ELB created by the Ingress Controller.
+
+data "kubernetes_service" "ingress_nginx" {
+  metadata {
+    name      = "ingress-nginx"  # Adjust this if your service name is different
+    namespace = "ingress-nginx"             # Ensure this matches the namespace used for nginx-ingress
+  }
+  depends_on = [helm_release.ingress-nginx]
+
+}
+
+
+
+# data "aws_lb" "ingress_nginx" {
+#   name = regex(
+#     "(^[^-]+)",
+#     data.kubernetes_service.ingress-nginx.status[0].load_balancer[0].ingress[0].hostname
+#   )[0]
+# # name = data.kubernetes_service.ingress-nginx.status[0].load_balancer[0].ingress[0].hostname
+# }
+
+data "aws_lb" "ingress_nginx" {
+  name = data.kubernetes_service.ingress_nginx.status[0].load_balancer[0].ingress[0].hostname
+}
