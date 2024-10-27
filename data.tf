@@ -6,9 +6,12 @@ data "aws_caller_identity" "current" {} # used for accesing Account ID and ARN
 
 # get EKS cluster info to configure Kubernetes and Helm providers
 
-# get EKS cluster info to configure Kubernetes and Helm providers
 data "aws_eks_cluster" "cluster" {
   name = module.eks_cluster.cluster_name
+  depends_on = [
+        module.eks_cluster,
+        null_resource.update_kubeconfig  # Adding this for extra safety
+    ]
 }
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks_cluster.cluster_name
