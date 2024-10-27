@@ -18,7 +18,7 @@ resource "helm_release" "artifactory" {
   namespace  = kubernetes_namespace.tools.metadata[0].name
 
   values = [
-    file("${path.module}/values.yaml")
+   "${file("./values.yaml")}"
   ]
 
   timeout = 600 # Timeout in seconds (10 minutes)
