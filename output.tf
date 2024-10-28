@@ -8,3 +8,11 @@ output "configure_kubectl" {
   value       = "aws eks --region ${var.aws_region} update-kubeconfig --name ${module.eks_cluster.cluster_name}"
 }
 
+# Output the DNS record details
+# output "dns_record" {
+#   value = aws_route53_record.ingress_nginx
+# }
+
+# output "load_balancer_hostname" {
+#   value = data.kubernetes_service.ingress_nginx.status.0.load_balancer.0.ingress.0.hostname
+# }

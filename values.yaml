@@ -26,3 +26,30 @@ postgresql:
     enabled: true
     size: 200Gi
 
+ingress:
+  className: nginx
+  namespace: tools
+  enabled: true
+  defaultBackend:
+    enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 500m
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: ssl
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/private-key-rotation-policy: Always
+  labels:
+    name: artifactory
+  tls:
+  - hosts:
+    - tooling.artifactory.citatech.online
+    secretName: tooling.artifactory.citatech.online
+nginx:
+  enabled: true
+  hosts:
+    - tooling.artifactory.citatech.online
+  service:
+    type: LoadBalancer
+

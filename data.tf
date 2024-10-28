@@ -37,13 +37,18 @@ data "aws_eks_addon_version" "this" {
 
 data "kubernetes_service" "ingress_nginx" {
   metadata {
-    name      = "ingress-nginx"  # Adjust this if your service name is different
-    namespace = "ingress-nginx"             # Ensure this matches the namespace used for nginx-ingress
+    name      = "ingress-nginx"  
+    namespace = "ingress-nginx"            
   }
   depends_on = [helm_release.ingress-nginx]
+  
 
 }
 
+data "aws_route53_zone" "selected" {
+  name         = var.your_domain_name  
+  private_zone = false
+}
 
 
 

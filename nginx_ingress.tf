@@ -20,7 +20,7 @@ resource "helm_release" "ingress-nginx" {
   
 
   values = [
-    "${file("./helm-file/artifactory-ingress.yaml")}"
+    "${file("values.yaml")}"
   ]
 
   wait   = true  
@@ -39,13 +39,13 @@ resource "helm_release" "ingress-nginx" {
 }
 
 
-# resource "kubernetes_manifest" "artifactory_ingress" {
+resource "kubernetes_manifest" "artifactory_ingress" {
 
-#   depends_on = [
-#     module.eks_cluster,
-#     helm_release.ingress-nginx
-#   ]
-#   manifest = yamldecode(file("./helm-file/artifactory-ingress.yaml"))
+  depends_on = [
+    module.eks_cluster,
+    helm_release.ingress-nginx
+  ]
+  manifest = yamldecode(file("./helm-file/artifactory-ingress.yaml"))
 
  
-# }
+}
