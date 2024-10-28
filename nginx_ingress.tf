@@ -46,6 +46,5 @@ resource "kubernetes_manifest" "artifactory_ingress" {
     helm_release.ingress-nginx
   ]
   manifest = yamldecode(file("./helm-file/artifactory-ingress.yaml"))
-
- 
+  
 }

@@ -11,6 +11,5 @@ resource "aws_route53_record" "artifactory" {
 
   depends_on = [
     helm_release.ingress-nginx,
-    kubernetes_manifest.artifactory_ingress
   ]
 }
