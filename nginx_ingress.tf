@@ -6,18 +6,25 @@ resource "kubernetes_namespace" "ingress_nginx" {
 
 resource "helm_release" "ingress-nginx" {
   name       = "ingress-nginx"
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
+  # repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "./nginx-ingress-chart/ingress-nginx"
 
   namespace  = kubernetes_namespace.ingress_nginx.metadata[0].name
   timeout = 600
 
+  depends_on = [
+    module.eks_cluster,
+    kubernetes_namespace.ingress_nginx,
+    helm_release.artifactory
+  ]
+  
+
   values = [
-    "${file("./nginx-ingress.yaml")}"
+    "${file("./helm-file/artifactory-ingress.yaml")}"
   ]
 
-  wait   = true  # Wait until the deployment is complete
-  atomic = true  # Roll back on failure
+  wait   = true  
+  atomic = true  
 
   set {
     name  = "controller.admissionWebhooks.enabled"
@@ -28,14 +35,17 @@ resource "helm_release" "ingress-nginx" {
     value = "true"
   }
 
-  set {
-    name  = "metrics.enabled"
-    value = "true"
-  }
-
-
-  
 
 }
 
 
+# resource "kubernetes_manifest" "artifactory_ingress" {
+
+#   depends_on = [
+#     module.eks_cluster,
+#     helm_release.ingress-nginx
+#   ]
+#   manifest = yamldecode(file("./helm-file/artifactory-ingress.yaml"))
+
+ 
+# }

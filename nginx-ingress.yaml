@@ -1,20 +1,10 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: artifactory
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: "tooling.artifactory.citatech.online"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: artifactory
-            port:
-              number: 8082
-
-
-
+controller:
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+  ingressClassResource:
+    name: nginx
+    enabled: true

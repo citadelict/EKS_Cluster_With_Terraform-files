@@ -1,3 +1,4 @@
+
 # get all available AZs in our region
 data "aws_availability_zones" "available_azs" {
   state = "available"
@@ -45,14 +46,7 @@ data "kubernetes_service" "ingress_nginx" {
 
 
 
-# data "aws_lb" "ingress_nginx" {
-#   name = regex(
-#     "(^[^-]+)",
-#     data.kubernetes_service.ingress-nginx.status[0].load_balancer[0].ingress[0].hostname
-#   )[0]
-# # name = data.kubernetes_service.ingress-nginx.status[0].load_balancer[0].ingress[0].hostname
-# }
 
-data "aws_lb" "ingress_nginx" {
-  name = data.kubernetes_service.ingress_nginx.status[0].load_balancer[0].ingress[0].hostname
-}
+# data "aws_lb" "ingress_nginx" {
+#   name = data.kubernetes_service.ingress_nginx.status[0].load_balancer[0].ingress[0].hostname
+# }

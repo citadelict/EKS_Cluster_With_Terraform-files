@@ -8,6 +8,3 @@ output "configure_kubectl" {
   value       = "aws eks --region ${var.aws_region} update-kubeconfig --name ${module.eks_cluster.cluster_name}"
 }
 
-output "ingress_nginx_lb_hostname" {
-  value = data.kubernetes_service.ingress_nginx.status[0].load_balancer[0].ingress[0].hostname
-}
