@@ -36,13 +36,12 @@ data "aws_eks_addon_version" "this" {
 # Get DNS name of the ELB created by the Ingress Controller.
 
 data "kubernetes_service" "ingress_nginx" {
-  metadata {
-    name      = "ingress-nginx"  
-    namespace = "ingress-nginx"            
-  }
   depends_on = [helm_release.ingress-nginx]
   
-
+  metadata {
+    name      = "ingress-nginx-controller"
+    namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
+  }
 }
 
 data "aws_route53_zone" "selected" {
@@ -50,8 +49,4 @@ data "aws_route53_zone" "selected" {
   private_zone = false
 }
 
-
-
-# data "aws_lb" "ingress_nginx" {
-#   name = data.kubernetes_service.ingress_nginx.status[0].load_balancer[0].ingress[0].hostname
-# }
+data "aws_elb_hosted_zone_id" "main" {}

@@ -1,12 +1,16 @@
-resource "aws_route53_record" "ingress_nginx" {
-  count   = local.ingress_lb_hostname != null ? 1 : 0
-  zone_id = data.aws_route53_zone.selected.zone_id           
-  name    = "tooling-artifactory.citatech.online"  
-  type    = "A"                          
+resource "aws_route53_record" "artifactory" {
+  zone_id = data.aws_route53_zone.selected.zone_id
+  name    = var.subdomain 
+  type    = "A"
 
-  # If using an IP, set it like this
-  # records = [data.kubernetes_service.nginx_ingress_lb.status[0].load_balancer[0].ingress[0].ip]
+  alias {
+    name                   = data.kubernetes_service.ingress_nginx.status.0.load_balancer.0.ingress.0.hostname
+    zone_id               = data.aws_elb_hosted_zone_id.main.id  # Gets the canonical hosted zone ID for ELB
+    evaluate_target_health = true
+  }
 
- 
-  records = [data.kubernetes_service.ingress_nginx.status[0].load_balancer[0].ingress[0].hostname]
+  depends_on = [
+    helm_release.ingress-nginx,
+    kubernetes_manifest.artifactory_ingress
+  ]
 }
