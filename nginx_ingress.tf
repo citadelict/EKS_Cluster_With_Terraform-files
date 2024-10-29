@@ -37,14 +37,3 @@ resource "helm_release" "ingress-nginx" {
 
 
 }
-
-
-resource "kubernetes_manifest" "artifactory_ingress" {
-
-  depends_on = [
-    module.eks_cluster,
-    helm_release.ingress-nginx
-  ]
-  manifest = yamldecode(file("./helm-file/artifactory-ingress.yaml"))
-  
-}

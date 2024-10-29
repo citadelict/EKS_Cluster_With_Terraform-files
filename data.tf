@@ -50,3 +50,21 @@ data "aws_route53_zone" "selected" {
 }
 
 data "aws_elb_hosted_zone_id" "main" {}
+
+data "aws_iam_policy_document" "cert_manager_policy" {
+  statement {
+    actions   = ["route53:GetChange", "route53:ChangeResourceRecordSets", "route53:ListHostedZones", "route53:ListResourceRecordSets"]
+    resources = ["*"]
+  }
+}
+
+
+
+
+
+
+
+
+# data "aws_acm_certificate" "cert" {
+#   arn = aws_acm_certificate.ssl_certificate.arn
+# }
