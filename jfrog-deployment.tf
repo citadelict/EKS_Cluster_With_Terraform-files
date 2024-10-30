@@ -21,11 +21,13 @@ resource "helm_release" "artifactory" {
    "${file("./values.yaml")}"
   ]
 
-  timeout = 600 # Timeout in seconds (10 minutes)
+  timeout = 600 
 
   depends_on = [
+    module.eks_cluster,
     kubernetes_namespace.tools,
-    null_resource.update_kubeconfig  # Ensure kubeconfig is updated first
+    null_resource.update_kubeconfig 
+    
   ]
 }
 
