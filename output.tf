@@ -11,3 +11,7 @@ output "configure_kubectl" {
 output "artifactory_url" {
   value = aws_route53_record.artifactory.name
 }
+
+
+# FOR CERT-MANAGER
+

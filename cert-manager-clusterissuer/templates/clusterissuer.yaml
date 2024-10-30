@@ -13,8 +13,8 @@ spec:
         dnsZones:
           - "citatech.online"
       dns01:
-        route53:
-          region: us-wast-1
+        route53: {}
+          region: us-west-1
           role: "arn:aws:iam::010028775188:role/cert_manager_role" # This must be set so cert-manager what role to attempt to authenticate with
           auth:
             kubernetes:
