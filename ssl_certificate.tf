@@ -193,36 +193,36 @@ resource "helm_release" "cert_manager_clusterissuer" {
     helm_release.cert_manager  # Ensure cert-manager is installed first
   ]
 }
-resource "kubernetes_manifest" "custom_cluster_issuer" {
-  manifest = {
-    apiVersion = "cert-manager.io/v1"
-    kind       = "ClusterIssuer"
-    metadata = {
-      name = "letsencrypt-prod"
-    }
-    spec = {
-      acme = {
-        server = "https://acme-v02.api.letsencrypt.org/directory"
-        email  = "citatech68@gmail.com"
-        privateKeySecretRef = {
-          name = "letsencrypt-prod"
-        }
-        solvers = [
-          {
-            dns01 = {
-              route53 = {
-                region = "us-west-1"
-                role   = "arn:aws:iam::010028775188:role/cert_manager_role"
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
+# resource "kubernetes_manifest" "custom_cluster_issuer" {
+#   manifest = {
+#     apiVersion = "cert-manager.io/v1"
+#     kind       = "ClusterIssuer"
+#     metadata = {
+#       name = "letsencrypt-prod"
+#     }
+#     spec = {
+#       acme = {
+#         server = "https://acme-v02.api.letsencrypt.org/directory"
+#         email  = "citatech68@gmail.com"
+#         privateKeySecretRef = {
+#           name = "letsencrypt-prod"
+#         }
+#         solvers = [
+#           {
+#             dns01 = {
+#               route53 = {
+#                 region = "us-west-1"
+#                 role   = "arn:aws:iam::010028775188:role/cert_manager_role"
+#               }
+#             }
+#           }
+#         ]
+#       }
+#     }
+#   }
 
-  depends_on = [
-    helm_release.cert_manager,
-    helm_release.cert_manager_clusterissuer
-  ]
-}
+#   depends_on = [
+#     helm_release.cert_manager,
+#     helm_release.cert_manager_clusterissuer
+#   ]
+# }
