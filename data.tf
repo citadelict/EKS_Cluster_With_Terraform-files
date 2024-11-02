@@ -52,11 +52,13 @@ data "aws_route53_zone" "selected" {
 data "aws_elb_hosted_zone_id" "main" {}
 
 
-data "aws_iam_openid_connect_provider" "oidc" {
+data "aws_iam_openid_connect_provider" "eks" {
   url = data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
 }
 
-
+data "tls_certificate" "eks" {
+  url = data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+}
 
 
 

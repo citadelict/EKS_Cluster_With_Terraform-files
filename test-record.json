@@ -1,0 +1,18 @@
+{
+    "Changes": [
+      {
+        "Action": "UPSERT",
+        "ResourceRecordSet": {
+          "Name": "test.citatech.online",
+          "Type": "A",
+          "TTL": 300,
+          "ResourceRecords": [
+            {
+              "Value": "1.2.3.4"
+            }
+          ]
+        }
+      }
+    ]
+  }
+  
