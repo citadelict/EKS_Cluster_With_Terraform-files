@@ -1,5 +1,13 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: example-com-prod
+  namespace: default
 spec:
-  template:
-    spec:
-      securityContext:
-        fsGroup: 1001
+  secretName: example-com-prod-tls
+  commonName: '*.example.com'
+  dnsNames:
+  - example.com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

@@ -5,7 +5,7 @@ resource "aws_route53_record" "artifactory" {
 
   alias {
     name                   = data.kubernetes_service.ingress_nginx.status.0.load_balancer.0.ingress.0.hostname
-    zone_id               = data.aws_elb_hosted_zone_id.main.id  # Gets the canonical hosted zone ID for ELB
+    zone_id               =  "Z24FKFUX50B4VW" # Gets the canonical hosted zone ID for ELB
     evaluate_target_health = true
   }
 
@@ -13,3 +13,6 @@ resource "aws_route53_record" "artifactory" {
     helm_release.ingress-nginx,
   ]
 }
+
+
+# data.aws_elb_hosted_zone_id.main.id

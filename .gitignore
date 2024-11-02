@@ -9,3 +9,4 @@ kubeconfig
 ingress-nginx-4.11.2.tgz
 /nginx-ingress-chart/
 terraform.backup.tfstate
+secrets.yaml
