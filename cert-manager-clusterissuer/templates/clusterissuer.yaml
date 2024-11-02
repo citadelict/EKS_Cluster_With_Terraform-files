@@ -22,7 +22,4 @@ spec:
             secretAccessKeySecretRef:
               name: route53-credentials
               key: secret-access-key
-          # auth:
-          #   kubernetes:
-          #     serviceAccountRef:
-          #       name: "cert-manager" # The name of the service account created
+       

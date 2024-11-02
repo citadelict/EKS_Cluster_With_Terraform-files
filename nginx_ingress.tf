@@ -43,6 +43,14 @@ resource "helm_release" "ingress-nginx" {
   #  "${file("./values.yaml")}"
   # ]
 
+  values = [
+    <<EOF
+    controller:
+      extraArgs:
+        default-ssl-certificate: "tools/tooling.artifactory.citatech.online"
+    EOF
+  ]
+
   depends_on = [
     module.eks_cluster,
     kubernetes_namespace.ingress_nginx,

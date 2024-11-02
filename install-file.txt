@@ -4,13 +4,3 @@ echo $
 
 helm uninstall artifactory -n tools
 
-
-
-
-Use a Two-Step Apply Process
-First Apply: Create the resources that local.node_group_roles depends on (e.g., EKS cluster and node groups).
-
-        terraform apply -target=module.eks_cluster
-
-
-Second Apply: Run  terraform apply to apply the remaining configurations.
